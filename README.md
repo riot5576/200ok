@@ -1,6 +1,6 @@
-# nginx-license-server
+# 200ok
 
-Tiny NGINX-based image that exposes five **POST-only** endpoints and returns `OK` for license checks. Built on `nginx:alpine`.
+Tiny NGINX-based image that exposes five **POST-only** endpoints and returns 200 `OK`. Built on `nginx:alpine-slim`.
 
 ## What it does
 
@@ -23,10 +23,10 @@ Tiny NGINX-based image that exposes five **POST-only** endpoints and returns `OK
 
 ```bash
 # Pull (replace with your repo/tag)
-docker pull <your-dockerhub-username>/nginx-license-server:latest
+docker pull riot5576/200ok:latest
 
 # Run
-docker run -d   --name license-endpoints   -p 80:80   --restart unless-stopped   <your-dockerhub-username>/nginx-license-server:latest
+docker run -d   --name 200ok-server   -p 80:80   --restart unless-stopped   riot5576/200ok:latest
 ```
 
 ### Verify
@@ -70,7 +70,7 @@ EXPOSE 80
 
 ```bash
 docker build -t <your-tag> .
-docker run -d -p 80:80 --name license-endpoints <your-tag>
+docker run -d -p 80:80 --name 200ok-server <your-tag>
 ```
 
 ---
@@ -80,8 +80,8 @@ docker run -d -p 80:80 --name license-endpoints <your-tag>
 ```yaml
 services:
   license:
-    image: <your-dockerhub-username>/nginx-license-server:latest
-    container_name: license-endpoints
+    image: riot5576/200ok:latest
+    container_name: 200ok-server
     ports:
       - "80:80"
     restart: unless-stopped
@@ -92,7 +92,7 @@ services:
 ## Notes & tips
 
 - If a container with the same name already exists, remove it first:  
-  `docker rm -f license-endpoints`
+  `docker rm -f 200ok-server`
 - Want TLS? Put this behind your existing reverse proxy/ingress, or extend the image with your own server block that listens on 443.
 - Rate limiting or IP allowlists can be added with standard NGINX directives (`limit_req`, `allow`/`deny`) per `location`.
 
@@ -100,5 +100,19 @@ services:
 
 ## License
 
-Same as the repository this image is published from. If unspecified, all rights reserved by the publisher.
+**MIT No Attribution**
 
+Copyright 2025 Ragnar L (ragnar.codes@proton.me)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

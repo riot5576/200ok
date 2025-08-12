@@ -22,7 +22,7 @@ Tiny NGINX-based image that exposes five **POST-only** endpoints and returns 200
 ## Quick start
 
 ```bash
-# Pull (replace with your repo/tag)
+# Pull
 docker pull riot5576/200ok:latest
 
 # Run
@@ -46,17 +46,53 @@ curl -i http://localhost/Register2.aspx
 This image ships a single config at `/etc/nginx/conf.d/default.conf` with **one `location` per endpoint**, e.g.:
 
 ```nginx
-location = /Register2.aspx {
-    add_header Allow "POST" always;
-    if ($request_method != POST) { return 405; }
-    return 200 "OK";
+# /etc/nginx/conf.d/default.conf
+server {
+    listen 80;
+    server_name _;          # catch-all host
+
+    default_type text/html;
+
+    ### Register2.aspx -----------------------------------------------
+    location = /Register2.aspx {
+        add_header Allow "POST" always;
+        if ($request_method != POST) { return 405; }
+        return 200 "OK";
+    }
+
+    ### CheckRuntimePerpetual.aspx -----------------------------------
+    location = /CheckRuntimePerpetual.aspx {
+        add_header Allow "POST" always;
+        if ($request_method != POST) { return 405; }
+        return 200 "OK";
+    }
+
+    ### CheckRuntimeNetwork.aspx -------------------------------------
+    location = /CheckRuntimeNetwork.aspx {
+        add_header Allow "POST" always;
+        if ($request_method != POST) { return 405; }
+        return 200 "OK";
+    }
+
+    ### CheckLicense.aspx --------------------------------------------
+    location = /CheckLicense.aspx {
+        add_header Allow "POST" always;
+        if ($request_method != POST) { return 405; }
+        return 200 "OK";
+    }
+
+    ### CheckRuntimeNetworkSecure.aspx -------------------------------
+    location = /CheckRuntimeNetworkSecure.aspx {
+        add_header Allow "POST" always;
+        if ($request_method != POST) { return 405; }
+        return 200 "OK";
+    }
 }
+
 ```
 
 - Default content type: `text/html`
 - Listens on port **80**
-
-If you need different bodies, headers, or content types, override the image with your own `default.conf`.
 
 ---
 

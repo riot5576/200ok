@@ -99,14 +99,14 @@ server {
 ## Build it yourself (optional)
 
 ```dockerfile
-FROM nginx:alpine
+FROM nginx:alpine-slim
 COPY default.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 ```
 
 ```bash
 docker build -t <your-tag> .
-docker run -d -p 80:80 --name 200ok-server <your-tag>
+docker run -d --name 200ok-server -p 80:80 --restart unless-stopped <your-tag>
 ```
 
 ---
@@ -127,9 +127,7 @@ services:
 
 ## Notes & tips
 
-- If a container with the same name already exists, remove it first:  
-  `docker rm -f 200ok-server`
-- Want TLS? Put this behind your existing reverse proxy/ingress, or extend the image with your own server block that listens on 443.
+- HTTPS is not needed for these endpoints, clients only use HTTP
 - Rate limiting or IP allowlists can be added with standard NGINX directives (`limit_req`, `allow`/`deny`) per `location`.
 
 ---
